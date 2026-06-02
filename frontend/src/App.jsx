@@ -30,11 +30,19 @@ function App() {
     if (!selectedUser) return
     setLoading(true)
     try {
-      const res = await fetch(`${API_BASE}/pipeline/run?user_id=${selectedUser}&include_zone2=${includeZone2}`)
+      const res = await fetch(`${API_BASE}/pipeline/run?user_id=${selectedUser}&include_zone2=${includeZone2}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+      })
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}))
+        throw new Error(err.detail || `Pipeline failed: ${res.status}`)
+      }
       const data = await res.json()
       setResult(data)
     } catch (e) {
       console.error(e)
+      setResult({ error: e.message })
     } finally {
       setLoading(false)
     }
@@ -44,8 +52,15 @@ function App() {
     if (compareUsers.length < 2) return
     setLoading(true)
     try {
-      const ids = compareUsers.join('&user_ids=')
-      const res = await fetch(`${API_BASE}/pipeline/compare?${ids}&include_zone2=${includeZone2}`)
+      const params = compareUsers.map(id => `user_ids=${id}`).join('&')
+      const res = await fetch(`${API_BASE}/pipeline/compare?${params}&include_zone2=${includeZone2}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+      })
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}))
+        throw new Error(err.detail || `Comparison failed: ${res.status}`)
+      }
       const data = await res.json()
       setCompareResults(data.comparisons || [])
     } catch (e) {
@@ -113,6 +128,13 @@ function App() {
             </button>
           </div>
         </div>
+
+        {/* Error */}
+        {result && result.error && (
+          <div className="bg-red-900/30 border border-red-700 rounded-xl p-4 mb-6">
+            <p className="text-red-300">❌ {result.error}</p>
+          </div>
+        )}
 
         {/* Results */}
         {result && !result.error && (

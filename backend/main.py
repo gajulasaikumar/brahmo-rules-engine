@@ -47,7 +47,9 @@ frontend_dist = os.path.join(os.path.dirname(os.path.abspath(__file__)), "fronte
 @app.get("/api/users")
 def get_users(db: Session = Depends(get_db)):
     """Get all available user profiles."""
-    users = db.query(User).filter(User.status == "ACTIVE").all()
+    users = db.query(User).filter(
+        (User.status == "ACTIVE") | (User.status.is_(None))
+    ).all()
     return [
         {
             "id": u.id,

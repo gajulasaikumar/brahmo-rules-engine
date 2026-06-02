@@ -50,14 +50,14 @@ INSERT IGNORE INTO hierarchy_levels (id, org_id, level_number, level_name, depar
 -- ============================================================
 -- 7 Users
 -- ============================================================
-INSERT IGNORE INTO users (id, org_id, name, role, department, ceiling_level, write_ceiling, compliance_clearance) VALUES
-('U-PRIYA',  'supra', 'Nurse Priya',       'VIEWER',  'ortho',     10, NULL, '[]'),
-('U-VIKRAM', 'supra', 'Dr. Vikram (HOD)',   'HOD',     'ortho',      4, 4,    '[]'),
-('U-ANANYA', 'supra', 'Dr. Ananya',         'EDITOR',  'medicine',   8, 8,    '[]'),
-('U-SHARMA', 'supra', 'Dr. Sharma (HOD)',   'HOD',     'medicine',   4, 4,    '[]'),
-('U-RAVI',   'supra', 'Pharmacist Ravi',    'VIEWER',  'pharmacy',  12, NULL, '[]'),
-('U-SUNITA', 'supra', 'Dr. Sunita (QA)',    'QUALITY', 'quality',    6, 8,    '["MNPI"]'),
-('U-SURESH', 'supra', 'Admin Suresh',       'ADMIN',   'admin',      1, 1,    '["MNPI", "PHI", "CONFIDENTIAL"]');
+INSERT IGNORE INTO users (id, org_id, name, role, department, ceiling_level, write_ceiling, compliance_clearance, status) VALUES
+('U-PRIYA',  'supra', 'Nurse Priya',       'VIEWER',  'ortho',     10, NULL, '[]', 'ACTIVE'),
+('U-VIKRAM', 'supra', 'Dr. Vikram (HOD)',   'HOD',     'ortho',      4, 4,    '[]', 'ACTIVE'),
+('U-ANANYA', 'supra', 'Dr. Ananya',         'EDITOR',  'medicine',   8, 8,    '[]', 'ACTIVE'),
+('U-SHARMA', 'supra', 'Dr. Sharma (HOD)',   'HOD',     'medicine',   4, 4,    '[]', 'ACTIVE'),
+('U-RAVI',   'supra', 'Pharmacist Ravi',    'VIEWER',  'pharmacy',  12, NULL, '[]', 'ACTIVE'),
+('U-SUNITA', 'supra', 'Dr. Sunita (QA)',    'QUALITY', 'quality',    6, 8,    '["MNPI"]', 'ACTIVE'),
+('U-SURESH', 'supra', 'Admin Suresh',       'ADMIN',   'admin',      1, 1,    '["MNPI", "PHI", "CONFIDENTIAL"]', 'ACTIVE');
 
 -- ============================================================
 -- 50 Knowledge Nodes
